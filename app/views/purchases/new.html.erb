@@ -1,0 +1,28 @@
+<%= render 'sounds/sound', sound: @sound %>
+
+<div class="sound-price">
+  ¥<%= @sound.price.to_s(:delimited) %>
+</div>
+
+<%= form_with(model: @purchase, local: true, method: :get ,url: confirm_purchases_path) do |f| %>
+
+  <% if @purchase.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(purchase.errors.count, "error") %> prohibited this purchase from being saved:</h2>
+
+      <ul>
+      <% purchase.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+
+    </div>
+  <% end %>
+
+  <%= f.hidden_field :user_id, :value => current_user.id %>
+  <%= f.hidden_field :sound_id, :value => @sound.id %>
+
+  <%= link_to "戻る", :back, class:"btn btn-back" %>
+  <%= f.submit '確認に進む', class:"btn btn-warning"%>
+
+<% end %>

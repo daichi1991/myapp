@@ -1,0 +1,292 @@
+.header-group{
+  border-top: solid 1px #dddddd;
+  border-bottom: solid 1px #dddddd;
+}
+
+.header-menu{
+  text-align: center;
+
+}
+
+.top-header-btn {
+  margin-left: 5px;
+}
+
+.dropdown-menu{
+  padding:5px;
+}
+
+.menu-btn{
+  text-align: left;
+}
+
+.fa-star{
+  font-size: 20px;
+}
+
+.fa-search{
+  font-size: 20px;
+}
+
+.fa-user-alt{
+  font-size: 20px;
+}
+
+.fa-music{
+  font-size: 20px;
+}
+
+.user-info{
+  text-align: center;
+  text-decoration: none;
+  color: black;
+}
+
+.fa-cog{
+  font-size: 20px;
+}
+
+.sound-category img{
+  width:20vw;
+  height:20vh;
+  object-fit: cover;
+}
+
+.sound-mood img{
+  width:20vw;
+  height:20vh;
+  object-fit: cover;
+}
+
+
+.heart-black{
+  text-decoration: none;
+  color: black;
+}
+
+
+
+.sound-category input[type="checkbox"] {
+  display: none;
+}
+
+.sound-mood input[type="checkbox"] {
+  display: none;
+}
+
+label img {
+  margin: 3px;
+  padding: 8px;
+}
+
+/* 選択されたラジオボタンの画像の背景をオレンジ色に変える */
+.sound-category input[type="checkbox"]:checked + label img {
+  background: #17a2b8;
+}
+
+.sound-mood input[type="checkbox"]:checked + label img {
+  background: #17a2b8;
+}
+
+.user-image{
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+}
+
+.user-image-mini{
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.box {
+  width: 100%;
+}
+
+.box img{
+  object-fit: cover;
+  width: 100%;
+  height: 20vh;
+}
+
+
+
+
+//-sounds
+
+
+.sound-content{
+  margin-bottom: 40px;
+}
+
+.sound-content-btn button{
+  margin-left: 30px;
+}
+
+.sound-content-btn a{
+  margin-left: 20px;
+}
+
+.user-image-sound{
+  height: 150px;
+  width: 150px;
+}
+
+.play-pause-btn{
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  margin: auto;
+  width: 50%;
+  height: 80%;
+}
+
+.sound-container-tags{
+  text-align: right;
+}
+
+.btn-tags{
+  color: #fff;
+  background-color: #bbbbbb;
+  border-color: #bbbbbb;
+  border-radius: 50px;
+  padding:2px;
+}
+
+
+
+.btn-tags:hover{
+  color: #fff;
+  background-color: #cccccc;
+  border-color: #cccccc;
+}
+
+.sound-by{
+  color: #dddddd;
+}
+
+.sound-artist{
+  color: #888888;
+}
+
+.sound-title{
+  font-size: 20px;
+  font-weight: bold;
+  color: #333333;
+}
+
+.sound-price{
+  font-size: 20px;
+  text-align: left;
+  color: red;
+}
+
+.btn-cart {
+  color: #fff;
+  background-color: #CC3300;
+  border-color: #CC3300;
+}
+
+.btn-cart:hover{
+  color: #fff;
+  background-color: red;
+  border-color: red;
+}
+
+.btn-dl {
+  color: #fff;
+  background-color: #006400;
+  border-color: #006400;
+}
+
+.btn-dl:hover{
+  color: #fff;
+  background-color: #556B2F;
+  border-color: #556B2F;
+}
+
+
+//購入
+.introduction{
+  width: 60%;
+}
+
+.introduction-url textarea{
+  width:60%;
+  height: 80px;
+}
+
+.introduction-url-modal textarea{
+  width:100%;
+  height: 30px;
+}
+
+//ページネーション
+.pagination>li>a {
+  margin-left: 5px;
+  margin-right: 5px;
+  border: none;     /*枠線をなくす*/
+  color: #696969;   /*文字の色を変える*/
+}
+
+.pagination>.active>a {
+  background: #93c9ff;     /*背景の色を変える*/
+  border-radius: 15px;     /*角を丸くする*/
+}
+
+.pagination>li>a:hover {
+  border-radius: 15px;    /*角を丸くする*/
+}
+
+//ユーザー
+.user-list-btn{
+  position: relative;
+  margin: 0 10px 0 10px;
+  left:20px;
+}
+
+//アーティスト
+.artist-info{
+  margin: 20px 0 20px 0;
+}
+
+.btn-exhibition{
+  padding: 10px 40px 10px 40px;
+  color: white;
+  background-color: #0066CC;
+  border-color: #0066CC;
+}
+
+.btn-exhibition:hover{
+  color: white;
+  background-color: #003399;
+  border-color: #003399;
+}
+
+.section-exhibition{
+  margin: 40px 0 40px 0;
+}
+
+
+//汎用
+.btn-back{
+  color: black;
+  background-color: #ffffff;
+  border-color: #bbbbbb;
+}
+
+.btn-back:hover{
+  color: black;
+  background-color: #eeeeee;
+  border-color: #bbbbbb;
+}
+
+.section-bar{
+  margin:10px 0 10px 0;
+  padding: 20px;
+  font-size: 20px;
+  background-color: #eeeeee;
+}

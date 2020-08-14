@@ -1,0 +1,90 @@
+
+
+<div class="row user-info">
+
+  <div class="col-xs-4">
+
+      <% unless @user.image.blank? %>
+        <%= image_tag @user.image.to_s, class:"user-image" %>
+      <% else %>
+        <%= image_tag 'default_user.jpeg', class:"user-image" %>
+      <% end %>
+
+  </div>
+
+  <div class="col-xs-4">
+    <%= @user.username %>
+  </div>
+
+  <div class="col-xs-3">
+    <% if @user.artist.present? %>
+      <% if @user.artist.status == true %>
+        <%if @user != current_user %>
+          <span id="follow-of-<%= @user.artist.id %>">
+            <%= render "follows/follow", artist: @user.artist %>
+          </span>
+        <% end %>
+      フォロワー：<%= @user.artist.follows_count %><br>
+      <% end %>
+    <% end %>
+
+  </div>
+
+  <div class="col-xs-1">
+    <%= link_to edit_user_path(@user.id), class:"btn btn-light" do %>
+      <i class="fas fa-cog"></i><br>
+      ユーザー情報編集
+    <% end %>
+
+    <% unless @user.artist.present? %>
+      <%= link_to new_artist_path, class:"btn btn-light" do %>
+        <i class="fas fa-cog"></i><br>
+        アーティスト新規登録
+      <% end %>
+    <% else %>
+      <%= link_to artist_path(@user.artist.id), class:"btn btn-light" do %>
+        <i class="fas fa-music"></i><br>
+        チャンネルへ
+      <% end %>
+    <% end %>
+
+  </div>
+
+</div>
+
+<% if @user.artist.present? %>
+  <% if @user.artist.status == 1 %>
+    <%= @user.artist.description %><br>
+      Youtubeチャンネル：<%= link_to @user.artist.youtube.url, @user.artist.youtube.url ,target: :_blank %><br>
+
+
+      <% if @user.artist.sounds.exists? %>
+        <div class="section-bar">
+          出品楽曲
+        </div>
+        <% @user.artist.sounds.each do |sound| %>
+          <%= render 'sounds/sound', sound: sound %>
+        <% end %>
+    <% end %>
+  <% end %>
+<% end %>
+
+<br>
+
+<% if @user = current_user %>
+  <div class="section-bar">
+    購入済みの楽曲
+  </div>
+
+
+  <% unless @user.purchases.exists? %>
+    なし
+  <% else %>
+    <% @purchases.each do |purchase| %>
+      <%= render 'sounds/sound', sound: purchase.sound %>
+    <% end %>
+    <%= paginate @purchases %>
+
+  <% end %>
+
+<% end %>

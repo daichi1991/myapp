@@ -1,0 +1,10 @@
+<div class="section-bar">
+  <%= link_to artist_path(@artist.id) do%>
+    <%= @artist.user.username %>
+  <% end %>
+  さんのフォロワーリスト
+</div>
+
+<% @follows.each do |follow| %>
+  <%= render 'users/list', user:follow.user %>
+<% end %>

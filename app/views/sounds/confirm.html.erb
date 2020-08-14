@@ -1,0 +1,65 @@
+<div id="waveform"> </div>
+
+<div style="text-align: center">
+  <button class="btn btn-primary" onclick="wavesurfer.playPause()">
+    <i class="glyphicon glyphicon-play"></i>Play</button>
+</div>
+
+<%= form_with(model: @sound, local: true) do |f|%>
+
+  <%= f.label :sound_category %>
+  <%= @sound.sound_category_id %>
+
+  <%= f.label :sound_mood %>
+  <%= @sound.sound_mood_id %>
+
+  <%= f.label :tag %>
+  <%= @sound.tag_list %>
+
+  <%= f.label :description %>
+  <%= @sound.description %>
+
+  <%= f.label :price %>
+  <%= @sound.price %>
+
+<% end %>
+
+<%= form_with(model: @sound, local: true, method: :get , url: new_sound_path) do |f| %>
+  <%= f.hidden_field :audio_file_cache %>
+  <%= f.hidden_field :title %>
+  <%= f.hidden_field :sound_category_id %>
+  <%= f.hidden_field :sound_mood_id %>
+  <%= f.hidden_field :tag_list, :value => @sound.tag_list.join(',') %>
+  <%= f.hidden_field :description %>
+  <%= f.hidden_field :price %>
+  <%= f.hidden_field :status %>
+  <%= f.hidden_field :artist_id %>
+  <%= f.submit '入力画面へ戻る'%>
+<% end %>
+
+<%= form_with(model: @sound, local: true, url: sounds_path) do |f| %>
+  <%= f.hidden_field :audio_file_cache %>
+  <%= f.hidden_field :title %>
+  <%= f.hidden_field :sound_category_id %>
+  <%= f.hidden_field :sound_mood_id %>
+  <%= f.hidden_field :tag_list, :value => @sound.tag_list.join(',') %>
+  <%= f.hidden_field :description %>
+  <%= f.hidden_field :price %>
+  <%= f.hidden_field :status %>
+  <%= f.hidden_field :artist_id %>
+
+  <%= f.submit '出品完了'%>
+<% end %>
+
+
+<script language="JavaScript">
+
+var wavesurfer = WaveSurfer.create({
+  container: '#waveform',
+  waveColor: 'black',
+  progressColor: '#abcdef'
+});
+
+wavesurfer.load('<%= @sound.audio_file %>');
+
+</script>

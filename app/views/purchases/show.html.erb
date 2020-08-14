@@ -1,0 +1,23 @@
+<%= render 'sounds/sound', sound: @sound %>
+
+<%= link_to download_purchase_path(@sound),class: "btn btn-dl btn-sm", method: :post do %>
+  <i class="fas fa-download download-black"></i>ダウンロード
+<% end %>
+<br>
+アーティストを紹介して応援しましょう！<br>
+
+
+<!-- Target -->
+<div class="introduction-url">
+<textarea id="clipboard-area">
+<%= "music by #{@sound.artist.user.username}" %>
+<%= "http://localhost:3000/artists/#{@sound.artist_id}?icode=#{@introduction.code}" %></textarea>
+</div>
+
+<!-- Trigger -->
+
+<button id="clipboard-btn" class="btn btn-light clipboard-btn" data-clipboard-target="#clipboard-area">
+    コピーする
+</button>
+<span id="clip-message">
+</span>

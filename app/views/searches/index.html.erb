@@ -1,0 +1,31 @@
+<%= search_form_for(@q, url:result_searches_path ) do |f| %>
+
+  <%= f.submit "検索", class:"btn btn-outline-info btn-lg btn-block" %>
+
+
+  カテゴリーを選ぶ
+  <div class="sound-category">
+    <%= f.collection_check_boxes :sound_category_id_in, @categories, :id, :category_name do |c| %>
+      <%= c.check_box %>
+      <%= c.label do %>
+        <%= image_tag c.object.image.url %>
+      <% end %>
+    <% end %>
+  </div>
+
+  雰囲気を選ぶ
+  <div class="sound-mood">
+    <%= f.collection_check_boxes :sound_mood_id_in, @moods, :id, :mood_name do |m| %>
+      <%= m.check_box %>
+      <%= m.label do %>
+        <%= image_tag m.object.image.url %>
+      <% end %>
+    <% end %>
+  </div>
+
+
+
+
+
+
+<% end %>

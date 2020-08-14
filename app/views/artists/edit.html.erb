@@ -1,0 +1,20 @@
+アーティスト情報編集
+<%= form_with(model: @artist, local: true, url: {controller: 'artists', action: 'update' }) do |f|%>
+
+  <%= f.label :image %>
+  <%= f.file_field :image %>
+
+  <%= f.fields_for :youtube do |youtube| %>
+    <%= youtube.label :url %>
+    <%= youtube.text_field :url %>
+  <% end %>
+
+  <%= f.label :description %>
+  <%= f.text_area :description %>
+  <%= f.hidden_field :user_id, :value => current_user.id  %>
+  <%= f.hidden_field :status, :value => 1  %>
+
+
+  <%= f.submit '登録'%>
+
+<% end %>

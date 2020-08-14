@@ -1,0 +1,40 @@
+<nav class="navbar navbar-light bg-light header-group">
+  <div class="container">
+
+    <div class="header-menu">
+      <%= link_to searches_path,class:"btn btn-light" do %>
+        <i class="fas fa-search"></i><br>
+        検索
+      <% end%>
+    </div>
+
+
+    <% if user_signed_in? %>
+      <div class="header-menu">
+        <%= link_to watches_path, class:"btn btn-light" do%>
+          <i class="fas fa-star"></i><br>
+          ウォッチ中
+        <% end%>
+      </div>
+      <div class="header-menu">
+        <%= link_to user_path(current_user.id), class:"btn btn-light" do%>
+          <i class="fas fa-user-alt"></i><br>
+          マイページ
+        <% end%>
+      </div>
+
+      <% unless current_user.artist.nil? %>
+        <div class="header-menu">
+          <%= link_to artist_path(current_user.artist.id), class:"btn btn-light" do %>
+            <i class="fas fa-music"></i><br>
+            チャンネル
+          <% end%>
+        </div>
+      <% end %>
+
+    <% end %>
+
+
+
+  </div>
+</nav>

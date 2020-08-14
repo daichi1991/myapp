@@ -1,0 +1,21 @@
+
+  <% if current_user != sound.artist.user%>
+      <span class="watch">
+      <% if sound.watch?(current_user) %>
+        <%= form_for(sound.watches.find_by(user_id: current_user.id), method: :delete, remote: true) do |f| %>
+          <%= button_tag(class: "btn btn-info btn-sm") do %>
+            <i class="fas fa-star"></i>
+            <%= sound.watches_count %>
+          <% end %>
+        <% end %>
+      <% else %>
+        <%= form_for(sound.watches.build, remote: true) do |f| %>
+          <div><%= hidden_field_tag :sound_id, sound.id %></div>
+          <%= button_tag(class: "btn btn-outline-info btn-sm") do %>
+            <i class="far fa-star"></i>
+            <%= sound.watches_count %>
+          <% end %>
+        <% end %>
+      <% end %>
+    </span>
+  <% end %>

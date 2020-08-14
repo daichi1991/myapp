@@ -1,0 +1,24 @@
+検索結果
+
+<% if params[:q] %>
+  <% if params[:q][:sound_category_id_in].instance_of?(Array) %>
+    <% unless params[:q][:sound_category_id_in].reject(&:blank?).empty? %>
+      <%=params[:q][:sound_category_id_in].reject(&:blank?).map{|sound_category_id| SoundCategory.find(sound_category_id).category_name}.join(', ') %>
+    <% end %>
+  <% end %>
+<% end %>
+<br>
+
+<% if params[:q] %>
+  <% if params[:q][:sound_mood_id_in].instance_of?(Array) %>
+    <% unless params[:q][:sound_mood_id_in].reject(&:blank?).empty? %>
+      <%=params[:q][:sound_mood_id_in].reject(&:blank?).map{|sound_mood_id| SoundMood.find(sound_mood_id).mood_name}.join(', ') %>
+    <% end %>
+  <% end %>
+<% end %>
+<br>
+<% @sounds.each do |sound| %>
+  <%= render 'sounds/sound', sound: sound %>
+<% end %>
+
+<%= paginate @sounds %>

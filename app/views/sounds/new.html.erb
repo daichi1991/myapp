@@ -1,0 +1,58 @@
+
+
+
+<%= form_with(model: @sound, local: true,url: confirm_sounds_path) do |f|%>
+
+  <% if @sound.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(sound.errors.count, "error") %> prohibited this sound from being saved:</h2>
+
+      <ul>
+      <% @sound.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="form-group">
+    <%= f.label :audio_file %>
+    <%= f.file_field :audio_file ,class:"form-control-file"%>
+    <%= f.hidden_field :audio_file_cache %>
+  </div>
+
+
+  <div class="form-group">
+    <%= f.label :title %>
+    <%= f.text_field :title, class:"form-control"  %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :sound_category %>
+    <%= f.collection_select(:sound_category_id, SoundCategory.all, :id, :category_name, {prompt: '選択してください'}, {class:"form-control"} ) %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :sound_mood %>
+    <%= f.collection_select(:sound_mood_id, SoundMood.all, :id, :mood_name, {prompt: '選択してください'}, {class:"form-control"} ) %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :tag_list %>
+    <%= f.text_field :tag_list, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :description %>
+    <%= f.text_area :description, class: "form-control" %>
+  </div>
+
+
+  <%= f.hidden_field :price, :value => 3000 %>
+
+  <%= f.hidden_field :status, :value => 1 %>
+
+  <%= f.hidden_field :artist_id, :value => @aritst.id %>
+
+  <%= f.submit '確認に進む', class:"btn btn-success btn-block"%>
+
+<% end %>

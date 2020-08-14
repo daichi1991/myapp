@@ -1,0 +1,5 @@
+ウォッチ中
+<% @watches.each do |watch| %>
+  <%= render 'sounds/sound', sound: watch.sound %>
+<% end %>
+<%= paginate @watches %>

@@ -1,0 +1,39 @@
+新規オークション作成
+<%= @sound.id %>
+<%= @sound.description %>
+
+<%= form_with(model: @auction, local: true, method: :get ,url: confirm_auctions_path) do |f| %>
+
+  <% if @auction.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(auction.errors.count, "error") %> prohibited this auction from being saved:</h2>
+
+      <ul>
+      <% auction.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+
+    </div>
+  <% end %>
+
+  <% if @sound.buyout == false %>
+    <%= f.label :bid_price %>
+    <%= f.number_field :bid_price %>
+    <%= f.hidden_field :buyout, :value => false %>
+
+  <% else %>
+    即決価格：
+    <%= @sound.start_price %>
+    <%= f.hidden_field :bid_price, :value => @sound.start_price %>
+    <%= f.hidden_field :buyout, :value => true %>
+
+  <% end  %>
+
+
+  <%= f.hidden_field :user_id, :value => current_user.id %>
+  <%= f.hidden_field :sound_id, :value => @sound.id %>
+
+  <%= f.submit '確認に進む'%>
+
+<% end %>

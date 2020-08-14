@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Myapp</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <script src="https://unpkg.com/wavesurfer.js"></script>
+    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%= stylesheet_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+
+    <header>
+      <%= render 'layouts/admin_header' %>
+      <%= render 'layouts/top_header'%>
+    </header>
+    <%= render 'layouts/header' %>
+      <div class="container">
+        <%= yield %>
+      </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+    <script>
+      var clipboard = new ClipboardJS('.clipboard-btn');
+      document.getElementById("clipboard-btn").onclick = function() {
+        document.getElementById("clip-message").innerHTML = "コピーしました！";
+      };
+    </script>
+  </body>
+</html>

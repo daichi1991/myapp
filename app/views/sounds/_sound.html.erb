@@ -1,0 +1,220 @@
+<div class="row sound-content">
+
+  <div class="col-sm-2">
+    <% unless request.path.include?("artists") %>
+      <%=link_to artist_path(sound.artist.id) do %>
+        <% unless sound.artist.user.image.blank? %>
+          <%= image_tag sound.artist.user.image.to_s, class:"user-image-sound" %>
+        <% else %>
+          <%= image_tag 'default_user.jpeg', class:"user-image-sound" %>
+        <% end %>
+
+
+      <% end %>
+    <% end %>
+  </div>
+
+  <div class="col-sm-7" >
+    <div class="row">
+
+      <div class="col-sm-2">
+        <button id="wave-btn-<%=sound.id%>" class="btn btn-primary play-pause-btn" >
+          <div id="play-btn-<%=sound.id%>">
+            <i class="fas fa-play"></i>
+          </div>
+          <div id="pause-btn-<%=sound.id%>" hidden >
+            <i class="fas fa-pause"></i>
+          </div>
+        </button>
+      </div>
+
+      <% unless request.path.include?("purchase") %>
+        <div class="col-sm-4 sound-title-artist">
+          <%= link_to sound.title , sound_path(sound.id), class:"sound-title" %><br>
+          <span class="sound-by">by </span><%= link_to sound.artist.user.username, artist_path(sound.artist_id), class:"sound-artist" %>
+        </div>
+
+        <div class="col-sm-6">
+          <div class="sound-container-tags">
+            <% sound.tag_list.each do |tag|%>
+              <span class="label label-primary">
+                <%= link_to "##{tag}", result_searches_path(tag_name: tag), class:"btn btn-tags btn-sm" %>
+              </span>
+            <% end %>
+          </div>
+        </div>
+      <% else %>
+        <div class="col-sm-4 sound-title-artist sound-title">
+          <%= sound.title %><br>
+          <span class="sound-by">by </span><span class="sound-artist"><%= sound.artist.user.username %></span>
+        </div>
+
+        <div class="col-sm-6">
+          <div class="sound-container-tags">
+            <% sound.tag_list.each do |tag|%>
+              <button class="btn btn-tags btn-sm" disabled><%= "##{tag}" %></button>
+            <% end %>
+
+          </div>
+        </div>
+      <% end %>
+
+
+    </div>
+
+
+    <div id="waveform<%=sound.id%>"> </div>
+
+    <div class="row sound-content-btn" >
+
+      <div class="col-xs-4">
+        <span id="watch-of-<%= sound.id %>">
+          <%= render "watches/watch", sound: sound %>
+        </span>
+      </div>
+
+      <div class="col-xs-8">
+        <% if sound.status == 0 %>
+          現在この出品は無効に設定されています。
+        <% else %>
+
+          <% unless sound.artist == current_user.artist %>
+            <% unless request.path.include?("purchase") %>
+              <% if sound.purchase?(current_user) %>
+                <%= link_to download_purchase_path(sound),class: "btn btn-dl btn-sm", method: :post do %>
+                  <i class="fas fa-download download-black"></i>ダウンロード
+                <% end %>
+
+              <% else %>
+                <%= link_to new_purchase_path(sound_id: sound.id), class:"btn btn-cart btn-sm" do %>
+                  <i class="fas fa-shopping-cart"></i>購入へ
+                <% end %>
+              <% end %>
+              <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modal<%=sound.id %>">
+                <i class="fas fa-share-square"></i>共有
+              </button>
+            <% end %>
+
+          <% end %>
+
+        <% end %>
+      </div>
+
+    </div>
+
+
+  </div>
+
+
+  <div class="col-sm-3">
+
+    <% unless request.path.include?("purchase") %>
+      <%= sound.description %><br>
+
+      カテゴリ：
+      <%= link_to sound.sound_category.category_name, result_searches_path(@q, :'q[sound_category_id_eq' => "#{sound.sound_category.id}") %><br>
+
+      雰囲気：
+      <%= link_to sound.sound_mood.mood_name, result_searches_path(@q, :'q[sound_mood_id_eq' => "#{sound.sound_mood.id}")  %>
+
+
+      <div class="sound-price">
+        <% if sound.purchase?(current_user) %>
+          購入済み
+        <% else %>
+          ¥<%= sound.price.to_s(:delimited) %>
+        <% end %>
+      </div>
+    <% else %>
+      <%= sound.description %><br>
+      カテゴリ：
+      <%= sound.sound_category.category_name %><br>
+      雰囲気：
+      <%= sound.sound_mood.mood_name%>
+    <% end %>
+  </div>
+
+
+
+</div>
+
+
+<div class="modal fade" id="modal<%=sound.id %>" tabindex="-1"
+      role="dialog" aria-labelledby="label1" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="label1">共有</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="introduction-url-modal">
+          <textarea id="clipboard-area"><%= "http://localhost:3000/sounds/#{sound.id}" %></textarea>
+          <% if sound.purchase?(current_user) %>
+            <div class="border-top" style="margin:10px;padding:5px;">
+            </div>
+            <h5>購入者特典　アーティスト応援URL</h5>
+            <p>※リンクをクリックした人数に応じてポイントが加算されます</p>
+            <textarea id="clipboard-area-introduction"><%= "http://localhost:3000/artists/#{sound.artist_id}?icode=#{sound.artist.introductions.find_by(user_id: current_user.id, artist_id: sound.artist_id).code}" %></textarea>
+          <% end %>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">閉じる</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+<script language="JavaScript">
+
+
+
+  var wavesurfer<%=sound.id%> = WaveSurfer.create({
+    container: '#waveform<%=sound.id%>',
+    waveColor: 'black',
+    progressColor: '#abcdef',
+    barHeight: 1,
+    barWidth: 0.8,
+    height: 64
+  });
+
+  wavesurfer<%=sound.id%>.load('<%= sound.audio_file %>');
+
+
+
+
+  $("#wave-btn-<%=sound.id%>").click(
+    play = function () {
+      wavesurfer<%=sound.id%>.playPause();
+
+      var pauseBtn = document.getElementById('pause-btn-<%=sound.id%>');
+      var playBtn = document.getElementById('play-btn-<%=sound.id%>');
+
+      if( playBtn.hidden == false){
+        playBtn.hidden = true;
+        pauseBtn.hidden = false;
+      }else{
+        playBtn.hidden = false;
+        pauseBtn.hidden = true;
+      }
+    }
+  );
+
+  wavesurfer<%=sound.id%>.on('finish', function () {
+    var pauseBtn = document.getElementById('pause-btn-<%=sound.id%>');
+    var playBtn = document.getElementById('play-btn-<%=sound.id%>');
+    playBtn.hidden = false;
+    pauseBtn.hidden = true;
+  });
+
+
+
+
+</script>

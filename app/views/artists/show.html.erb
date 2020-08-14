@@ -1,0 +1,77 @@
+<div class="box">
+
+    <% unless @artist.image.blank? %>
+      <%= image_tag @artist.image.to_s %>
+    <% end %>
+
+</div>
+
+<div class="row user-info">
+
+  <div class="col-xs-4">
+
+      <% unless @artist.user.image.blank? %>
+        <%= image_tag @artist.user.image.to_s, class:"user-image" %>
+      <% else %>
+        <%= image_tag 'default_user.jpeg', class:"user-image" %>
+      <% end %>
+
+  </div>
+
+  <div class="col-xs-7">
+    <%= @artist.user.username %><br>
+
+    <% if @artist.present? %>
+      <% if @artist.status == true %>
+        <%if @artist.user != current_user %>
+          <span id="follow-of-<%= @artist.id %>">
+            <%= render "follows/follow", artist: @artist %>
+          </span>
+        <% end %>
+      フォロワー：<%= @artist.follows_count %><br>
+        <%= link_to follows_path(artist_id: @artist.id), class:"btn btn-light" do %>
+          フォロワー一覧
+        <% end %>
+      <% end %>
+    <% end %>
+
+  </div>
+
+  <div class="col-xs-1">
+    <% if @artist.user == current_user %>
+      <%= link_to edit_artist_path(@artist.id), class:"btn btn-light" do %>
+        <i class="fas fa-cog"></i><br>
+        アーティスト情報編集
+      <% end %>
+    <% end %>
+
+
+  </div>
+
+</div>
+
+
+  <% if @artist.status == true %>
+    <div class="artist-info">
+      <%= @artist.description %><br>
+        Youtubeチャンネル：<%= link_to @artist.youtube.url, @artist.youtube.url ,target: :_blank %>
+    </div>
+
+      <div class="section-exhibition">
+        <%= link_to new_sound_path, class:"btn btn-exhibition btn-lg" do %>
+            楽曲を出品する
+        <% end %>
+      </div>
+
+      <br>
+
+      <% if @sounds.exists? %>
+        <div class="section-bar">
+          出品楽曲
+        </div>
+        <% @sounds.each do |sound| %>
+          <%= render 'sounds/sound', sound: sound %>
+        <% end %>
+        <%= paginate @sounds %>
+    <% end %>
+  <% end %>

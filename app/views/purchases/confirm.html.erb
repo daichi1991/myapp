@@ -1,0 +1,49 @@
+<%= render 'sounds/sound', sound: @sound %>
+
+<div class="sound-price">
+  ¥<%= @sound.price.to_s(:delimited) %>
+</div>
+
+
+<% if @purchase.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= pluralize(purchase.errors.count, "error") %> prohibited this purchase from being saved:</h2>
+
+    <ul>
+    <% purchase.errors.full_messages.each do |message| %>
+      <li><%= message %></li>
+    <% end %>
+    </ul>
+
+  </div>
+<% end %>
+
+
+<%= form_with(model: @purchase, local: true, method: :get , url: new_purchase_path) do |f| %>
+  <%= f.hidden_field :user_id %>
+  <%= f.hidden_field :sound_id %>
+  <%= f.submit '入力画面へ戻る', class:"btn btn-back"%>
+<% end %>
+
+<%= form_with(model: @purchase, local: true, url: purchases_path) do |f| %>
+  <%= f.hidden_field :user_id %>
+  <%= f.hidden_field :sound_id %>
+
+  <input id="check" type="checkbox" />同意する<br>
+
+  <%= f.submit '購入を完了する', class:"btn btn-warning", id:"complete" ,disabled:"disabled" %>
+
+<% end %>
+
+<script type="text/javascript">
+  $('#check').change(function() {
+
+      if ( $(this).is(':checked') ){
+
+          $('#complete').prop('disabled', false);
+      } else {
+
+          $('#complete').prop('disabled', true);
+      }
+  });
+</script>

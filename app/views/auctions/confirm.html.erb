@@ -1,0 +1,28 @@
+<%= form_with(model: @auction, local: true) do |f|%>
+
+  <%= f.label :bid_price %>
+  <%= @auction.bid_price %>
+
+<% end %>
+
+<%= form_with(model: @auction, local: true, method: :get , url: new_auction_path) do |f| %>
+  <%= f.hidden_field :bid_price %>
+  <%= f.hidden_field :user_id %>
+  <%= f.hidden_field :sound_id %>
+  <%= f.hidden_field :buyout %>
+  <%= f.submit '入力画面へ戻る'%>
+<% end %>
+
+<%= form_with(model: @auction, local: true, url: auctions_path) do |f| %>
+  <%= f.hidden_field :bid_price %>
+  <%= f.hidden_field :user_id %>
+  <%= f.hidden_field :sound_id %>
+  <%= f.hidden_field :buyout %>
+
+  <% if @auction.buyout == true %>
+    <%= f.submit '落札を完了する'  %>
+  <% else %>
+    <%= f.submit '入札を完了する'%>
+  <% end %>
+
+<% end %>

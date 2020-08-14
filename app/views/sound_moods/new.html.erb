@@ -1,0 +1,12 @@
+雰囲気の新規作成
+<%= form_with(model: SoundMood, local: true) do |f|%>
+
+  <%= f.label :mood_name %>
+  <%= f.text_field :mood_name %>
+
+  <%= f.label :image %>
+  <%= f.file_field :image %>
+
+  <%= f.submit '登録'%>
+
+<% end %>
